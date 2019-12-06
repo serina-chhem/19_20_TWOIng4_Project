@@ -1,8 +1,8 @@
 # PAUL LAPLAIGE - SÉRINA CHHEM - ING 4 OCRES 4
 
-# https://trello.com/b/Uxgbre1E/widgets-project
+## https://trello.com/b/Uxgbre1E/widgets-project
 
-# Projet de fin de semestre
+### Projet de fin de semestre
 
 A lire impérativement avant de commencer quoi que ce soit, ce sont les règles que vous devrez appliquer tout au long du semestre:
 

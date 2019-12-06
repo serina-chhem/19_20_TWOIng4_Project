@@ -1,22 +1,41 @@
-.App {
+.icon {
+  width: 3rem;
+  height: 3rem; }
+  .icon i, .icon svg {
+    font-size: 2.25rem; }
+  .icon + .icon-text {
+    padding-left: 1rem;
+    width: calc(100% - 3rem - 1); }
+
+
+
+ .icon-shape {
+  padding: 12px;
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
+  border-radius: 50%; }
+  .icon-shape i, .icon-shape svg {
+    font-size: 1.25rem; }
+  .icon-shape.icon-lg i, .icon-shape.icon-lg svg {
+    font-size: 1.625rem; }
+  .icon-shape.icon-sm i, .icon-shape.icon-sm svg {
+    font-size: .875rem; }
+  .icon-shape svg {
+    width: 30px;
+    height: 30px; }
 
-.App-link {
-  color: #09d3ac;
-}
+
+.bg-info {
+  background-color: #11cdef !important; }
+
+
+  .card-stats{
+
+  	background-color: ;
+  }
+
+ #fragment{
+  	background-color: #dff7df;
+  }
