@@ -1,6 +1,6 @@
 import React from 'react';
 import App from '../App.js';
-import Formu from '../vue/form.js';
+import Formu from '../vue/admin.js';
 
 
 export default {
