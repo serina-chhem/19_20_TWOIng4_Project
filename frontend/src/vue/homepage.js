@@ -93,7 +93,7 @@ class Homepage extends React.Component{
 			nbSensor:'',
 			activeIndex: 0,
 			countryData:[],
-			
+			maxTemp:'',
 			isOpen: false,
 			
 		};
@@ -114,6 +114,25 @@ class Homepage extends React.Component{
 			}
 		];
 
+		this.sensorLoc = [
+			{
+				location: 'bedroom',
+				nb: 31
+			},
+			{
+				location: 'entrance',
+				nb: 26
+			},
+			{
+				location: 'bathroom',
+				nb: 25
+			},
+			{
+				location: 'livingroom',
+				nb: 18
+			}
+		];
+
 		this.renderCustomBarLabel = ({ payload, x, y, width, height, value }) => {
 			return <text x={x + width / 2} y={y} fill="#666" textAnchor="middle" dy={-6}> </text>;
 		};
@@ -128,39 +147,6 @@ class Homepage extends React.Component{
 
 
 	}
-
-
-// getData(){
-
-// 	axios.get('http://localhost:4000/admin/getLoc')
-// 		.then(response => {
-// 			this.setState({
-// 				countryData: response.data.map((pays, index) => {
-// 					return <tr>
-// 						<td> {pays._id} </td>
-// 						<td> {pays.count} </td>
-// 					</tr>
-
-// 				})
-
-
-// 			})
-// 			// const table = this.state.countryData.split('\n').slice(1);
-// 			this.state.countryData.forEach(row => {
-// 				const columns = row.split(',');
-// 				const pays = columns[0];
-// 				const nbUser = columns[1];
-// 				console.log(pays, nbUser);
-// 			})
-
-// 		})
-	
-// 		.catch(err => {
-// 			console.log(err);
-// 		})
-// }
-
-
 
 	componentDidMount() {
 
@@ -204,6 +190,17 @@ class Homepage extends React.Component{
 			.then(response => {
 				this.setState({	
 					measures: response.data,
+				})
+			})
+			.catch(err => {
+				console.log(err);
+			})
+
+
+		axios.get('http://localhost:4000/admin/getMaxTemp')
+			.then(response => {
+				this.setState({
+					maxTemp: response.data[0].maxTemp,
 				})
 			})
 			.catch(err => {
@@ -260,7 +257,6 @@ class Homepage extends React.Component{
 														fill="#FFBB28"
 														dataKey="value"
 														onMouseEnter={this.onPieEnter}
-
 													>
 													{
 														data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
@@ -275,7 +271,69 @@ class Homepage extends React.Component{
 								</TabContent>
 							</Card>
 
+
+							
+								
+								
+									<div className="card mb-3 bg-midnight-bloom widget-chart text-white card-border">
+										
+										<CardHeader>
+											<div tag="h5"
+												className="text-uppercase text-muted mb-0 card-header-title" >
+												Fréquence de localisation des capteurs 
+										</div>
+										</CardHeader>
+
+										<ResponsiveContainer width = '100%' height={187}>
+										<BarChart
+											width={500}
+											height={300}
+											data={this.sensorLoc}
+											margin={{
+												top: 5, right: 30, left: 20, bottom: 5,
+											}}>
+											<CartesianGrid strokeDasharray="3 3" />
+											<XAxis dataKey="location" />
+											<YAxis />
+											<Tooltip />
+											
+											<Bar dataKey="nb" fill="#8884d8" />
+										
+										</BarChart>
+										</ResponsiveContainer>
+
+									</div>
+						
+							
+
+						</Col>
+
+
+
+						<Col md="12" lg="6">
 							<Row>
+								<Col lg="6">
+									
+									<div className="card mb-3 bg-arielle-smile widget-chart text-white card-border">
+									
+										<CardHeader>
+										<div tag="h5"
+											className="text-uppercase text-muted mb-0 card-header-title" >
+											Nombre de capteurs en circulation
+										</div>
+										</CardHeader>
+										<div className="h4 font-weight-bold mb-0" >
+											<span className="text-danger mr-2">
+
+												{this.state.nbSensor}
+											</span>
+										</div>
+										
+										
+
+									</div>
+								</Col>
+
 								<Col lg="6">
 									<div className="card mb-3 widget-chart">
 										<div className="widget-chart-content">
@@ -289,15 +347,23 @@ class Homepage extends React.Component{
 													Nombre total d'utilisateurs
                                             </div>
 											</CardHeader>
-											<div  className="h4 font-weight-bold mb-0" >
-												{this.state.nbDocs}
+
+											<div className="h4 font-weight-bold mb-0" >
+												<span className="text-danger mr-2">
+
+													{this.state.nbDocs} 
+	
+												</span>
 											</div>
 											
+										
+
 
 										</div>
 
 									</div>
 								</Col>
+								
 
 								<Col lg="6">
 									<div className="card mb-3 widget-chart">
@@ -309,94 +375,25 @@ class Homepage extends React.Component{
 											<CardHeader>
 												<div tag="h5"
 													className="text-uppercase text-muted mb-0 card-header-title" >
-													Pays le plus consommateur 
+													Pays le plus consommateur
                                             </div>
 											</CardHeader>
 
 											<div className="h4 font-weight-bold mb-0" >
 												<span className="text-danger mr-2">
-													{this.state.countryName} avec {this.state.count} utilisateurs 
-	
+													{this.state.countryName} avec {this.state.count} utilisateurs
+
 												</span>
 											</div>
 
-													
-											
+
+
 
 										</div>
-
-									</div>
-								</Col>
-							</Row>
-						</Col>
-
-
-
-						<Col md="12" lg="6">
-							<Row>
-								<Col md="6">
-									
-									<div className="card mb-3 bg-arielle-smile widget-chart text-white card-border">
-										<div className="icon-wrapper rounded-circle">
-											<div className="icon-wrapper-bg bg-white opacity-10" />
-											<i className="lnr-cog icon-gradient bg-arielle-smile" />
-										</div>
-										<CardHeader>
-										<div tag="h5"
-											className="text-uppercase text-muted mb-0 card-header-title" >
-											Nombre de capteurs en circulation
-										</div>
-										</CardHeader>
-										<div className="mt-3 mb-0 text-muted text-sm" >
-											<span className="text-danger mr-2">
-											{this.state.nbSensor}
-											</span>
-
-										</div>
-										
 
 									</div>
 								</Col>
-								<Col md="6">
-									<div className="card mb-3 bg-midnight-bloom widget-chart text-white card-border">
-										<div className="icon-wrapper rounded">
-											<div className="icon-wrapper-bg bg-white opacity-10" />
-											<i className="lnr-screen icon-gradient bg-warm-flame" />
-										</div>
-										<CardHeader>
-											<div tag="h5"
-												className="text-uppercase text-muted mb-0 card-header-title" >
-												Nombre de capteurs en circulation
-										</div>
-										</CardHeader>
-										<div className="mt-3 mb-0 text-muted text-sm" >
-											<span className="text-danger mr-2">
-												{this.state.nbSensor}
-											</span>
 
-										</div>
-									</div>
-								</Col>
-								<Col md="6">
-									<div className="card mb-3 bg-grow-early widget-chart text-white card-border">
-										<div className="icon-wrapper rounded">
-											<div className="icon-wrapper-bg bg-dark opacity-9" />
-											<i className="lnr-graduation-hat text-white" />
-										</div>
-										<CardHeader>
-											<div tag="h5"
-												className="text-uppercase text-muted mb-0 card-header-title" >
-												Nombre de capteurs 
-										</div>
-										</CardHeader>
-										<div className="mt-3 mb-0 text-muted text-sm" >
-											<span className="text-danger mr-2">
-												{this.state.nbSensor}
-											</span>
-
-										</div>
-									</div>
-								</Col>
 								<Col md="6">
 									<div className="card mb-3 bg-love-kiss widget-chart card-border">
 										<div className="widget-chart-content text-white">
@@ -407,15 +404,18 @@ class Homepage extends React.Component{
 											<CardHeader>
 												<div tag="h5"
 													className="text-uppercase text-muted mb-0 card-header-title" >
-													Pays
+													Température la plus élevée
 										</div>
 											</CardHeader>
-											<div className="mt-3 mb-0 text-muted text-sm" >
-												<span className="text-danger mr-2">
-													{this.state.countryName}
-												</span>
 
+											<div className="h4 font-weight-bold mb-0" >
+												<span className="text-danger mr-2">
+													{this.state.maxTemp} 
+												</span>
 											</div>
+
+
+										
 										</div>
 
 									</div>

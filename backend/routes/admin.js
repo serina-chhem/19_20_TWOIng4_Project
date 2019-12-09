@@ -61,6 +61,20 @@ router.get("/latestRec", function(req, res, next){
 
 })
 
+
+router.get("/sortSensorLoc", function(req, res, next) {
+
+	Sensor.aggregate([
+		{
+			$sortByCount: "$location"
+		},
+	]).
+		then(function(result) {
+			res.json(result)
+		});
+
+})
+
 router.get("/getLoc", function(req, res, next) {
 
 	User.aggregate([
@@ -75,6 +89,29 @@ router.get("/getLoc", function(req, res, next) {
 		});
 
 })
+
+router.get("/getMaxTemp", function(req, res, next) {
+
+	Measure.aggregate([
+
+	{
+		$match : {type: "temperature"}
+	},
+	{
+		$group: {
+			_id:"$type",
+			maxTemp: {$max: "$value"}
+		}
+	}
+
+		])
+		.then(function(result) {
+			res.json(result)
+		});
+
+})
+
+
 router.get("/measureData", function(req, res, next) {
 
 	Measure.find()
