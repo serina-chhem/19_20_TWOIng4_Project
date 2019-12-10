@@ -97,6 +97,7 @@ class Homepage extends React.Component{
 			count4: '',
 			nbDocs:'',
 			nbSensor:'',
+			maxPol:'',
 			activeIndex: 0,
 			countryData:[],
 			minPol: '',
@@ -194,6 +195,12 @@ class Homepage extends React.Component{
 			})
 		})
 
+		axios.get('http://localhost:4000/admin/getMaxPollution')
+			.then(response => {
+				this.setState({
+					maxPol: response.data[0].value
+				})
+			})
 
 
 		axios.get('http://localhost:4000/admin/nbSensors')
@@ -310,7 +317,7 @@ class Homepage extends React.Component{
 											margin={{
 												top: 5, right: 30, left: 20, bottom: 5,
 											}}>
-											<CartesianGrid strokeDasharray="3 3" />
+										
 											<XAxis dataKey="location" />
 											<YAxis />
 											<Tooltip />
@@ -357,9 +364,9 @@ class Homepage extends React.Component{
 												</span>
 												</div>
 
-												<div className="h6 font-weight-bold mb-0">	{this.state.secondCountryName} ({this.state.count2} users) </div>
-												<div className="h6 font-weight-bold mb-0">	{this.state.thirdCountryName} ({this.state.count3} users)</div>
-												<div className="h6 font-weight-bold mb-0">	{this.state.fourthCountryName} ({this.state.count4} users)</div>
+												<div className="h6 text-muted font-weight-bold mb-0">	{this.state.secondCountryName} ({this.state.count2} users) </div>
+												<div className="h6 text-muted font-weight-bold mb-0">	{this.state.thirdCountryName} ({this.state.count3} users)</div>
+												<div className="h6 text-muted font-weight-bold mb-0">	{this.state.fourthCountryName} ({this.state.count4} users)</div>
 
 											</Col>
 
@@ -373,16 +380,21 @@ class Homepage extends React.Component{
 										<CardHeader>
 											<div tag="h5"
 												className="text-uppercase text-muted mb-0 card-header-title" >
-												Pollution de l'air en moyenne
+												Pollution de l'air minimum capté
 										</div>
 
 										</CardHeader>
 
 										<Col>
 											<div className="h4 font-weight-bold mb-0" >
-												<span className="text-dark mr-2">
+												<span className="text-primary mr-2">
 
-													<i className="fa fa-wifi" /> {"  "}	{this.state.minPol}
+													<i className="fa fa-cloud" /> {"  "}	{this.state.minPol}
+												</span>
+											</div>
+											<div className="h6 font-weight mb-0" >
+												<span className="text-success mr-2">
+													Maximum : {this.state.maxPol} <i className="fa fa-arrow-up" /> 
 												</span>
 											</div>
 
