@@ -4,11 +4,13 @@
 ## https://trello.com/b/Uxgbre1E/widgets-project
 
 
-## Steps to run the project 
+# Étapes à respecter pour le bon fonctionnement du projet :)  
 
 backend % npm start
 
-frontend % npm start 
+frontend % npm i workbox-build upath workbox-webpack-plugin
+
+frontend % npm start
 
 
 
