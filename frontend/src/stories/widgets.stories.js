@@ -1,14 +1,13 @@
 import React from 'react';
 import App from '../App.js';
-import Formu from '../vue/admin.js';
+
 
 
 export default {
-	component: App, Formu,
+	component: App,
 	title: 'Projet',
 };
 
 
-export const Dashboard = () => <App />;
+export const Dashboard = () => <App/>;
 
-export const Formulaire = () => <Formu />;

@@ -81,7 +81,7 @@ class Formu extends React.Component {
 		return (
 			
 			<div  className="container">
-
+			<h2> Inscription d'un nouvel utilisateur </h2>
 
 				<div className="header-body">
 					<Form onSubmit={this.onSubmit}>
@@ -109,7 +109,7 @@ class Formu extends React.Component {
 
 				<FormGroup>
 							<Input type="submit" value="Ajouter un utilisateur "  className="btn btn-primary" />
-						</FormGroup>
+				</FormGroup>
 
 						
 

@@ -16,10 +16,17 @@ class NavigationBar extends React.Component {
 
 	render(){
 		return (
-			
+
 			<Navbar color="light" light expand="md">
-				<NavbarBrand > 					
-					<Link to="/" class="nav-link">  
+				<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous" /> 
+
+				<NavbarBrand >
+					
+						
+					<Link to="/" class="nav-link">  <div className="icon icon-shape bg-primary text-white rounded-circle shadow">
+						<i className="fa fa-home" />
+					</div>
+
 					Dashboard
 					</Link>
 					</NavbarBrand>
@@ -27,12 +34,12 @@ class NavigationBar extends React.Component {
 
 					<NavItem >
 
-						<Link to="/admin" class="nav-link"> Formulaire </Link>
+						<Link to="/admin" class="nav-link"> Nouvel utilisateur </Link>
 
 					</NavItem>
 
 
-					<NavItem >	<Link to="/liste" className="nav-link"> Voir la liste entière </Link> </NavItem>
+					<NavItem >	<Link to="/liste" className="nav-link"> Liste des utilisateurs </Link> </NavItem>
 	
 
 

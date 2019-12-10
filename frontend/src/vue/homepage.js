@@ -87,12 +87,19 @@ class Homepage extends React.Component{
 		this.toggle = this.toggle.bind(this);
 
 		this.state = {
-			countryName:'',
-			count:'',
+			firstCountryName: '',
+			count1:'',
+			secondCountryName: '',
+			count2: '',
+			thirdCountryName: '',
+			count3: '',
+			fourthCountryName:'',
+			count4: '',
 			nbDocs:'',
 			nbSensor:'',
 			activeIndex: 0,
 			countryData:[],
+			minPol: '',
 			maxTemp:'',
 			isOpen: false,
 			
@@ -161,19 +168,33 @@ class Homepage extends React.Component{
 			})	
 
 
-
-
-		axios.get('http://localhost:4000/admin/latestRec')
+		axios.get('http://localhost:4000/admin/nbCountry')
 			.then(response => {
 
 				this.setState({
-					countryName: response.data[0]._id,
-					count: response.data[0].count,
+					firstCountryName: response.data[0]._id,
+					count1: response.data[0].count,
+					secondCountryName: response.data[1]._id,
+					count2: response.data[1].count,
+					thirdCountryName: response.data[2]._id,
+					count3: response.data[2].count,
+					fourthCountryName: response.data[3]._id,
+					count4: response.data[3].count,
 				})
 			})
 			.catch(err => {
 				console.log(err);
 			})
+
+
+		axios.get('http://localhost:4000/admin/getMinPollution')
+		.then(response=>{
+			this.setState({
+				minPol: response.data[0].value
+			})
+		})
+
+
 
 		axios.get('http://localhost:4000/admin/nbSensors')
 			.then(response => {
@@ -244,8 +265,8 @@ class Homepage extends React.Component{
 
 										<div className="widget-chart p-0">
 
-											<ResponsiveContainer height={187}>
-												<PieChart width={200} height={200}>
+											<ResponsiveContainer height={270}>
+												<PieChart width={300} height={300}>
 													<Pie
 														activeIndex={this.state.activeIndex}
 														activeShape={renderActiveShape}
@@ -271,10 +292,6 @@ class Homepage extends React.Component{
 								</TabContent>
 							</Card>
 
-
-							
-								
-								
 									<div className="card mb-3 bg-midnight-bloom widget-chart text-white card-border">
 										
 										<CardHeader>
@@ -283,8 +300,9 @@ class Homepage extends React.Component{
 												Fréquence de localisation des capteurs 
 										</div>
 										</CardHeader>
+								
 
-										<ResponsiveContainer width = '100%' height={187}>
+										<ResponsiveContainer width = '100%' height={220}>
 										<BarChart
 											width={500}
 											height={300}
@@ -297,7 +315,13 @@ class Homepage extends React.Component{
 											<YAxis />
 											<Tooltip />
 											
-											<Bar dataKey="nb" fill="#8884d8" />
+											<Bar dataKey="nb" fill="#8884d8">
+											{
+												data.map((entry, index) => (
+													<Cell key={`cell-${index}`} fill={COLORS[index % 20]} />
+												))
+											}
+											</Bar>
 										
 										</BarChart>
 										</ResponsiveContainer>
@@ -313,26 +337,60 @@ class Homepage extends React.Component{
 						<Col md="12" lg="6">
 							<Row>
 								<Col lg="6">
-									
-									<div className="card mb-3 bg-arielle-smile widget-chart text-white card-border">
-									
-										<CardHeader>
-										<div tag="h5"
-											className="text-uppercase text-muted mb-0 card-header-title" >
-											Nombre de capteurs en circulation
-										</div>
-										</CardHeader>
-										<div className="h4 font-weight-bold mb-0" >
-											<span className="text-danger mr-2">
+									<div className="card mb-3 widget-chart">
+										<div className="widget-chart-content">
+											<div className="icon-wrapper rounded-circle">
+												<div className="icon-wrapper-bg bg-danger" />
+												<i className="lnr-laptop-phone text-danger" />
+											</div>
+											<CardHeader>
+												<div tag="h5"
+													className="text-uppercase text-muted mb-0 card-header-title" >
+													Pays les plus consommateurs de capteurs
+                                            </div>
+											</CardHeader>
+											<Col>
+												<div className="h4 font-weight-bold mb-0" >
+													<span className="text-warning mr-2">
+														<i className="fa fa-flag" />		{this.state.firstCountryName} ({this.state.count1} users)
 
-												{this.state.nbSensor}
-											</span>
+												</span>
+												</div>
+
+												<div className="h6 font-weight-bold mb-0">	{this.state.secondCountryName} ({this.state.count2} users) </div>
+												<div className="h6 font-weight-bold mb-0">	{this.state.thirdCountryName} ({this.state.count3} users)</div>
+												<div className="h6 font-weight-bold mb-0">	{this.state.fourthCountryName} ({this.state.count4} users)</div>
+
+											</Col>
+
+
 										</div>
-										
-										
+
+									</div>
+
+									<div className="card mb-3 bg-arielle-smile widget-chart text-white card-border">
+
+										<CardHeader>
+											<div tag="h5"
+												className="text-uppercase text-muted mb-0 card-header-title" >
+												Pollution de l'air en moyenne
+										</div>
+
+										</CardHeader>
+
+										<Col>
+											<div className="h4 font-weight-bold mb-0" >
+												<span className="text-dark mr-2">
+
+													<i className="fa fa-wifi" /> {"  "}	{this.state.minPol}
+												</span>
+											</div>
+
+										</Col>
 
 									</div>
 								</Col>
+							
 
 								<Col lg="6">
 									<div className="card mb-3 widget-chart">
@@ -347,54 +405,23 @@ class Homepage extends React.Component{
 													Nombre total d'utilisateurs
                                             </div>
 											</CardHeader>
-
+											<Col>
 											<div className="h4 font-weight-bold mb-0" >
-												<span className="text-danger mr-2">
+												<span className="text-success mr-2">
 
-													{this.state.nbDocs} 
+												<i className="fa fa-users"/> {"  "}	{this.state.nbDocs} 
 	
 												</span>
 											</div>
-											
+											</Col>
 										
 
 
 										</div>
 
 									</div>
-								</Col>
-								
+							
 
-								<Col lg="6">
-									<div className="card mb-3 widget-chart">
-										<div className="widget-chart-content">
-											<div className="icon-wrapper rounded-circle">
-												<div className="icon-wrapper-bg bg-danger" />
-												<i className="lnr-laptop-phone text-danger" />
-											</div>
-											<CardHeader>
-												<div tag="h5"
-													className="text-uppercase text-muted mb-0 card-header-title" >
-													Pays le plus consommateur
-                                            </div>
-											</CardHeader>
-
-											<div className="h4 font-weight-bold mb-0" >
-												<span className="text-danger mr-2">
-													{this.state.countryName} avec {this.state.count} utilisateurs
-
-												</span>
-											</div>
-
-
-
-
-										</div>
-
-									</div>
-								</Col>
-
-								<Col md="6">
 									<div className="card mb-3 bg-love-kiss widget-chart card-border">
 										<div className="widget-chart-content text-white">
 											<div className="icon-wrapper rounded-circle">
@@ -407,20 +434,47 @@ class Homepage extends React.Component{
 													Température la plus élevée
 										</div>
 											</CardHeader>
+											<Col>
 
 											<div className="h4 font-weight-bold mb-0" >
 												<span className="text-danger mr-2">
-													{this.state.maxTemp} 
+														<i className="fa fa-fire"/> {this.state.maxTemp} degrés
 												</span>
+												
+											 
 											</div>
-
+												</Col>
 
 										
 										</div>
 
 									</div>
+								
+									<div className="card mb-3 bg-arielle-smile widget-chart text-white card-border">
+
+										<CardHeader>
+											<div tag="h5"
+												className="text-uppercase text-muted mb-0 card-header-title" >
+												Nombre de capteurs en circulation
+										</div>
+
+										</CardHeader>
+
+										<Col>
+											<div className="h4 font-weight-bold mb-0" >
+												<span className="text-dark mr-2">
+
+													<i className="fa fa-wifi" /> {"  "}	{this.state.nbSensor}
+												</span>
+											</div>
+
+										</Col>
+
+									</div>
 								</Col>
 							</Row>
+
+
 							<div className="card mb-3 widget-chart">
 								<div className="widget-chart-content">
 									<div className="icon-wrapper rounded-circle">

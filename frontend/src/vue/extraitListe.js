@@ -61,7 +61,7 @@ class extraitListe extends React.Component {
 										<th className="text-center">Taille</th>
 									</tr>
 								</thead>
-								<tbody>
+								<tbody >
 									{this.userList()[0]}
 									{this.userList()[1]}
 									{this.userList()[2]}

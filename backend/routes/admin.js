@@ -46,13 +46,30 @@ router.get("/getAvg", function(req,res,next){
 	});
 })
 
-router.get("/latestRec", function(req, res, next){
+router.get("/getMinPollution", function(req, res, next) {
+	Measure.aggregate([
+		{
+			$match: { type: "airPollution" }
+		},
+		{
+			$sort:{value:1}
+		},
+		{ $limit: 1 }
+
+	]).
+		then(function(result) {
+			res.json(result)
+		});
+})
+
+
+router.get("/nbCountry", function(req, res, next) {
 
 	User.aggregate([
 	{
 		$sortByCount: "$location"
 	},
-		{ $limit: 1 }
+		{ $limit: 4 }
 
 	]).
 		then(function(result) {

@@ -101,7 +101,7 @@ class editUser extends React.Component {
 			
 			<div  className="container">
 
-				Edit user
+				<h3>Edit user</h3>
 				<div className="header-body">
 					<Form onSubmit={this.onSubmit}>
 				<FormGroup>
@@ -112,6 +112,8 @@ class editUser extends React.Component {
 				<FormGroup>
 					<Label for="personsInHouse">Nb de personnes dans la maison : </Label>
 							<Input type="select" selected={this.state.personsInHouse} onChange={this.onChangeNbPersons} >
+						<option>Choisir une option</option>
+
 						<option>1</option>
 						<option>2</option>
 						<option>3</option>
