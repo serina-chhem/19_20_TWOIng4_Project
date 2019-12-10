@@ -25,7 +25,10 @@
     "react-scripts": "3.2.0",
     "reactstrap": "^8.1.1",
     "recharts": "^1.8.5",
-    "render-fragment": "^0.1.1"
+    "render-fragment": "^0.1.1",
+    "upath": "^1.2.0",
+    "workbox-build": "^4.3.1",
+    "workbox-webpack-plugin": "^4.3.1"
   },
   "scripts": {
     "start": "react-scripts start",
