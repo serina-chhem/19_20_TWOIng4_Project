@@ -24,7 +24,6 @@ class App extends React.Component {
 
         <NavigationBar /> 
       <Switch>
-     
           
           <Route path="/" exact component={Homepage}/>
           <Route path = "/admin" component= {Formu} />
