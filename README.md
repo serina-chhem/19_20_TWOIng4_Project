@@ -3,6 +3,13 @@
 ## DEMO : https://www.loom.com/share/a029e5f4da8c4a58942882f428ec61d8
 ## https://trello.com/b/Uxgbre1E/widgets-project
 
+
+## Steps to run the project 
+backend % npm start
+frontend % npm start 
+
+
+
 ### Projet de fin de semestre
 
 A lire impérativement avant de commencer quoi que ce soit, ce sont les règles que vous devrez appliquer tout au long du semestre:
